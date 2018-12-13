@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -21,16 +21,23 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd),
+	map({ 50,50 }, gfx),
+	snake({ 1,1 }, Snake::right),
+	rnd(rd()),
+	xDist(0, map.GetWidth() - 1),
+	yDist(0, map.GetHeight() - 1),
+	timer(20)
 {
+	bait.Respawn(rnd, xDist, yDist);
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -38,8 +45,76 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (!gameOver)
+	{
+		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+		{
+			snake.SetDirection(Snake::right);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_LEFT))
+		{
+			snake.SetDirection(Snake::left);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_UP))
+		{
+			snake.SetDirection(Snake::up);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_DOWN))
+		{
+			snake.SetDirection(Snake::down);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
+		{
+			exit(0);
+		}
+
+		if (timer == maxTimer)
+		{
+			snake.Update();
+
+			if (snake.TailCollusion() || snake.BorderTest(map) || stones.CollusionTest(snake.GetLocation(0)))
+			{
+				gameOver = true;
+			}
+
+			if (snake.IsEat(bait))
+			{
+				snake.Grow();
+				bait.Respawn(rnd, xDist, yDist);
+				bait_counter++;
+				stones.Increase({ xDist(rnd),yDist(rnd) });
+
+				if (maxTimer != minTimer)
+				{
+					if (!(bait_counter % 5))
+					{
+						maxTimer -= 5;
+
+						if (minTimer > maxTimer)
+						{
+							maxTimer = minTimer;
+						}
+					}
+				}
+			}
+
+			timer = 1;
+		}
+
+		timer++;
+	}
 }
 
 void Game::ComposeFrame()
 {
+	map.DrawBorder();
+
+	snake.Draw(map);
+	bait.Draw(map);
+	stones.Draw(map);
+
+	if (gameOver)
+	{
+		SpriteCodex::DrawGameOver(350, 280, gfx);
+	}
 }
