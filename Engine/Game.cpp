@@ -68,6 +68,8 @@ void Game::UpdateModel()
 			exit(0);
 		}
 
+		const float dt = frametimer.Mark();
+
 		if (timer == maxTimer)
 		{
 			snake.Update();

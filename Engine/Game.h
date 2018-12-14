@@ -30,6 +30,7 @@
 #include <random>
 #include "Bait.h"
 #include "Stone.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -49,6 +50,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer frametimer;
+
 	std::random_device rd;
 	std::mt19937 rnd;
 	std::uniform_int_distribution<int> xDist;
