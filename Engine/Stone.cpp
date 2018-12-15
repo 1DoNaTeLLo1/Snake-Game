@@ -15,6 +15,11 @@ bool Stones::Stone::CollusionTest(Location l)
 	return l == loc;
 }
 
+Stones::Stones(Location l)
+{
+	stones[0].SetLocation(l);
+}
+
 void Stones::Draw(Map& map) const
 {
 	for (int i = 0; i < num; i++)

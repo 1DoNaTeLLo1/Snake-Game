@@ -30,7 +30,8 @@ Game::Game(MainWindow& wnd)
 	rnd(rd()),
 	xDist(0, map.GetWidth() - 1),
 	yDist(0, map.GetHeight() - 1),
-	timer(20)
+	timer(20),
+	stones({xDist(rnd),yDist(rnd)})
 {
 	bait.Respawn(rnd, xDist, yDist);
 }

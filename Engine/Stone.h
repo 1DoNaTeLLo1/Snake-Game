@@ -20,6 +20,7 @@ class Stones
 	int num = 1;
 
 public:
+	Stones(Location l);
 	void Draw(Map& map) const;
 	void Increase(Location l);
 	bool CollusionTest(Location l);
