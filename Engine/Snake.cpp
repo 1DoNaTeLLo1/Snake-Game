@@ -11,7 +11,7 @@ Snake::Snake(Location loc, Location d) :
 	dir(d)
 {
 	segment[0].loc = { 10,10 };
-	SetColor();
+	segment[0].c = headColor;
 }
 
 void Snake::Draw(Map& map)
@@ -56,7 +56,6 @@ void Snake::Grow()
 {
 	len++;
 	segment[len].loc = segment[len - 1].loc;
-
 	SetColor();
 }
 

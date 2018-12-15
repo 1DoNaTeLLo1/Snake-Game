@@ -28,7 +28,7 @@ class Map
 	static constexpr int dimension = 20;
 	static constexpr int borderThickness = 3;
 	static constexpr int dimBorderThickness = 1;
-	static constexpr Color borderColor = Colors::Red;
+	static constexpr Color borderColor = Colors::Blue;
 	Graphics& gfx;
 
 public:

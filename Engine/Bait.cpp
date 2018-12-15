@@ -1,7 +1,7 @@
 #include "Bait.h"
 
 Bait::Bait() :
-	c(Colors::Yellow)
+	c(Colors::Red)
 {
 }
 

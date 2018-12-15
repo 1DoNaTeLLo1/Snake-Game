@@ -12,6 +12,7 @@ class Snake
 	};
 
 	static constexpr int c[4] = { 145, 200, 255, 200 };
+	static constexpr Color headColor = Colors::Yellow;
 	int color_counter = 0;
 
 	static constexpr int max_tail_length = 100;
