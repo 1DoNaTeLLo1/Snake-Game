@@ -57,10 +57,10 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 
-	int timer = 1;
-	int maxTimer = 50;
-	int minTimer = 10;
-	int bait_counter = 0;
+	float timer = 0.0f;
+	float maxTimer = 0.3f;
+	float minTimer = 0.1f;
+	int eatenBait = 0;
 
 	Map map;
 	Snake snake;

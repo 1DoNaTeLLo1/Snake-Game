@@ -71,7 +71,7 @@ void Game::UpdateModel()
 
 		const float dt = frametimer.Mark();
 
-		if (timer == maxTimer)
+		if (timer >= maxTimer)
 		{
 			snake.Update();
 
@@ -84,27 +84,22 @@ void Game::UpdateModel()
 			{
 				snake.Grow();
 				bait.Respawn(rnd, xDist, yDist);
-				bait_counter++;
+				eatenBait++;
 				stones.Increase({ xDist(rnd),yDist(rnd) });
 
 				if (maxTimer != minTimer)
 				{
-					if (!(bait_counter % 5))
+					if (!(eatenBait % 5))
 					{
-						maxTimer -= 5;
-
-						if (minTimer > maxTimer)
-						{
-							maxTimer = minTimer;
-						}
+						maxTimer = std::max(maxTimer - 0.05f, minTimer);
 					}
 				}
 			}
 
-			timer = 1;
+			timer = dt - maxTimer;
 		}
 
-		timer++;
+		timer+=dt;
 	}
 }
 
